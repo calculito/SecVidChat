@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+  <!--<![endif]-->
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-167632492-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-167632492-1");
+    </script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>SecVidCh v1.7</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/images/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/rtc.css" />
+    <link rel="stylesheet" href="/css/snackbar.css" />
+    <link rel="stylesheet" href="/css/loading-ball.css" />
+    <link rel="stylesheet" href="/fontawesome/css/free.min.css" />
+    <link rel="stylesheet" href="/fontawesome/css/v4-shims.min.css" />
+    <link rel="stylesheet" href="/fontawesome/css/font-face.min.css" />
+    <link rel="manifest" href="/manifest.json" />
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+    <div class="loader-ball" id="loader-ball"></div>
+    <p id="remote-video-text"></p>
+    <video id="remote-video" autoplay playsinline></video>
+    <div id="moveable">
+      <p id="local-video-text">No webcam input</p>
+      <video id="local-video" autoplay muted playsinline></video>
+    </div>
+
+    <div id="entire-chat">
+      <div id="chat-zone">
+        <div class="chat-messages" id="chat-messages"></div>
+      </div>
+      <form class="compose">
+        <input type="text" placeholder="Type a message" />
+      </form>
+    </div>
+
+    <div class="multi-button">
+      <div class="buttonContainer">
+        <button class="hoverButton" onclick="{muteMicrophone()}">
+          <i id="mic-icon" class="fas fa-microphone fa-xs"></i>
+        </button>
+        <div class="HoverState" id="mic-text">Mute</div>
+      </div>
+
+      <!--      <div class="buttonContainer">-->
+      <!--        <button class="hoverButton" onclick="{openFullscreen()}">-->
+      <!--          <i class="fas fa-compress fa-xs"></i>-->
+      <!--        </button>-->
+      <!--        <div class="HoverState">Fullscreen</div>-->
+      <!--      </div>-->
+
+      <div class="buttonContainer">
+        <button class="hoverButton" onclick="{pauseVideo()}">
+          <i class="fas fa-video fa-xs" id="video-icon"></i>
+        </button>
+        <div class="HoverState" id="video-text">Pause Video</div>
+      </div>
+
+      <div class="buttonContainer">
+        <button class="hoverButton" id="share-button" onclick="{swap()}">
+          <i id="swap-icon" class="fas fa-desktop fa-xs"></i>
+        </button>
+        <div class="HoverState" id="swap-text">Share Screen</div>
+      </div>
+
+      <div class="buttonContainer">
+        <button class="hoverButton" onclick="{toggleChat()}">
+          <i id="chat-icon" class="fas fa-comment fa-xs"></i>
+        </button>
+        <div class="HoverState" id="chat-text">Show Chat</div>
+      </div>
+
+      <div class="buttonContainer">
+        <button
+          class="hoverButton"
+          id="pip-button"
+          onclick="{togglePictureInPicture()}"
+        >
+          <i class="fas fa-external-link-alt fa-xs"></i>
+        </button>
+        <div class="HoverState" id="pip-text">Toggle Picture in Picture</div>
+      </div>
+
+      <!-- <div class="buttonContainer">
+        <button class="hoverButton" onclick="{requestToggleCaptions()}">
+          <i class="fas fa-closed-captioning fa-xs"></i>
+        </button>
+        <div class="HoverState" id="caption-button-text">
+          Start Live Caption
+        </div>
+      </div> -->
+
+      <div class="buttonContainer">
+        <button class="hoverButton" onclick="{toggleWhiteBoard()}">
+          <i class="fas fa-chalkboard fa-xs"></i>
+        </button>
+        <div class="HoverState" id="whiteboard-text">Show Whiteboard</div>
+      </div>
+
+      <div class="buttonContainer">
+        <button
+          class="hoverButton"
+          onclick="{window.location.href = '/newrtc'}"
+        >
+          <i class="fas fa-phone-slash fa-xs"></i>
+        </button>
+        <div class="HoverState">End Call</div>
+      </div>
+    </div>
+
+    <canvas
+      id="whiteboard"
+      class="whiteboard"
+      style="display: none;"
+      width="600"
+      height="600"
+    >
+      Sorry, your browser doesn't support canvas elements
+    </canvas>
+
+    <input type="hidden" id="copy-input" />
+
+    <script src="/utils/adapter.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/utils/DetectRTC.js"></script>
+    <script src="/utils/snackbar.js"></script>
+    <script defer src="/utils/autolink.js"></script>
+    <script src="/utils/utils.js"></script>
+    <script id="chatJS" src="/js/rtc.js"></script>
+
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/sw.js");
+        });
+      }
+    </script>
+  </body>
+</html>

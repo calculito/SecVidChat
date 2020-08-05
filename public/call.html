@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+  <!--<![endif]-->
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-167632492-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-167632492-1");
+    </script>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/call.css" />
+    <link rel="icon" href="/images/logo.png" type="image/x-icon" />
+    <link rel="manifest" href="/manifest.json" />
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+    <form>
+      <div class="segment gradientText">
+        <h1>SecuredVideoChat</h1>
+      </div>
+
+      <label>
+        <input id="room" type="text" placeholder="Please enter room number:" />
+      </label>
+      <label>
+        <input
+          id="password"
+          type="text"
+          placeholder="Please enter room password (optional)"
+        />
+      </label>
+
+      <button class="red" type="button" onclick="{joinRoom()}">
+        <i class="icon ion-md-lock"></i> Join the room
+      </button>
+    </form>
+
+    <script>
+      function joinRoom() {
+        const room = document.getElementById("room").value;
+        const password = document.getElementById("password").value;
+        if (password) {
+          sessionStorage.setItem("SecVidCh", password);
+          window.location.href = "/authrtc/" + room;
+        } else {
+          window.location.href = "/rtc/" + room;
+        }
+      }
+    </script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/sw.js");
+        });
+      }
+    </script>
+  </body>
+</html>
